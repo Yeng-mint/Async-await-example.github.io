@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Async/Await </title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <h1>Caso de estudio asyn/await </h1>
+  <p> Alumno: Luis Alejandro Pérez Ramírez/
+      Materia : Programacion Web </p>
+
+  <!-- EJERCICIO 1 -->
+  <h2>Ejercicio 1 / setTimeout callback / async/await</h2>
+
+  <h3>Codigo original (callback)</h3>
+  <div class="cuadro">
+    <pre>
+console.log("Inicio del programa");
+
+setTimeout(() => {
+    console.log("Este es el callback ejecutandose 2 segundos despues");
+}, 2000);
+
+console.log("Fin del programa (o no?)");</pre>
+  </div>
+
+  <h3>Conversion a async/await</h3>
+  <div class="cuadro">
+    <pre>
+function esperar(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function programa() {
+    console.log("Inicio del programa");
+    await esperar(2000);
+    console.log("Este es el callback ejecutandose 2 segundos despues");
+    console.log("Fin del programa (ahora si en orden)");
+}
+
+programa();</pre>
+  </div>
+
+  <button onclick="runEjercicio1()">Ejecutar Ejercicio 1</button>
+  <p><strong>Salida:</strong></p>
+  <div id="out1" class="salida"></div>
+
+
+  <!-- EJERCICIO 2 -->
+  <h2>Ejercicio 2 &mdash; Consulta a API Dog CEO con async/await</h2>
+
+  <h3>Codigo</h3>
+  <div class="cuadro">
+    <pre>
+async function obtenerRazas() {
+    try {
+        const res  = await fetch("https://dog.ceo/api/breeds/list/all");
+        const data = await res.json();
+        console.log(data);
+        const razas = Object.keys(data.message);
+        document.getElementById("resultado").innerHTML =
+            razas.map(r => r).join("&lt;br&gt;");
+    } catch (err) {
+        console.error("Error:", err);
+        document.getElementById("resultado").innerHTML = "Error: " + err.message;
+    }
+}
+
+obtenerRazas();</pre>
+  </div>
+
+  <button onclick="runEjercicio2()">Ejecutar Ejercicio 2 - Consultar API Dog CEO</button>
+  <p><strong>Razas de perros (Dog CEO API):</strong></p>
+  <div id="resultado" class="salida"></div>
+
+
+  <!-- EJERCICIO 3 -->
+  <h2>Ejercicio 3 &mdash; Comparativa: Callback vs Async/Await</h2>
+
+  <button onclick="runEjercicio3()">Ejecutar Comparativa</button>
+
+  <table>
+    <tr>
+      <th>Callback (setTimeout)</th>
+      <th>Async / Await</th>
+    </tr>
+    <tr>
+      <td><div id="out3-cb" class="celda"></div></td>
+      <td><div id="out3-async" class="celda"></div></td>
+    </tr>
+  </table>
+
+  <footer> Tarea hecha: Luis Alejandro Perez Ramírez </footer>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
